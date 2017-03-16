@@ -621,11 +621,11 @@ type Composable func(parser Parser) Parser
 
 // Compose composes Composable functions.
 // `Compose(A, B, C)(parser)` is equivalent to `A(B(C(parser)))`.
-func Compose(transformers ...Composable) Composable {
+func Compose(composables ...Composable) Composable {
 	return func(parser Parser) Parser {
 		var composed = parser
-		for i := len(transformers) - 1; i >= 0; i-- {
-			composed = transformers[i](composed)
+		for i := len(composables) - 1; i >= 0; i-- {
+			composed = composables[i](composed)
 		}
 		return composed
 	}
